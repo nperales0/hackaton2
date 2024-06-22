@@ -15,13 +15,7 @@ const Login = () => {
             const response = await fetchLogin(username, password);
             localStorage.setItem('token', response.token);
 
-            // Redirigir según el rol
-            if (response.role === 'admin') {
-                navigate('/items');
-            } else if (response.role === 'cliente') {
-                navigate('/items');
-            }
-
+            navigate('/items')
             console.log(response.token);
         } catch (error) {
             setError(error.message);

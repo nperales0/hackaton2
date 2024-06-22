@@ -35,12 +35,7 @@ const Register = () => {
             const response = await fetchRegister(formData);
             localStorage.setItem('token', response.token);
 
-            // Redirigir según el rol
-            if (formData.role === 'admin') {
-                navigate('/items');
-            } else if (formData.role === 'cliente') {
-                navigate('/items');
-            }
+            navigate('/items');
 
             console.log(response.token);
         } catch (error) {

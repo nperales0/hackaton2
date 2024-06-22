@@ -1,9 +1,8 @@
-// src/services/api.js
 import axios from 'axios';
-import * as jwtDecode from 'jwt-decode';
+import * as jwtDecode from 'jwt-decode'; // Asumiendo que ya tienes esta librería instalada
 
-
-const API_URL = 'https://cepnq6rjbk.execute-api.us-east-1.amazonaws.com/items';
+const BASE_URL = 'https://cepnq6rjbk.execute-api.us-east-1.amazonaws.com/';
+const API_URL = `${BASE_URL}/items`;
 
 export const fetchItems = async (limit = 2, lastKey = null) => {
     try {
@@ -17,25 +16,52 @@ export const fetchItems = async (limit = 2, lastKey = null) => {
     }
 };
 
+export const getRoleBasedOnToken = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('No token found');
+    }
+    const decodedToken = jwtDecode(token);
+    return decodedToken.role;
+}
 
 export const fetchLogin = async (username, password) => {
     try {
-        const response = await axios.post('/auth/login', { username, password });
+        const response = await axios.post(`${BASE_URL}/auth/login`, { username, password });
         const token = response.data.token;
+
         localStorage.setItem('token', token);
+
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.error('Error fetching login:', error);
         throw error;
     }
 };
 
 export const fetchRegister = async (body) => {
     try {
-        const response = await axios.post('/auth/register', body);
+        const response = await axios.post(`${BASE_URL}/auth/register`, body);
         return response.data;
     } catch (error) {
         console.error('Error en fetchRegister:', error);
+        throw error;
+    }
+};
+
+export const getProducts = async (skip, limit) => {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+        const response = await axios.get(`${BASE_URL}/api/products`, {
+            params: { skip, limit },
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching products:', error);
         throw error;
     }
 };
