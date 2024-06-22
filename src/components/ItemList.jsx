@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { fetchItems } from "../services/api.js";
 
-const ItemList = () => {
+const ItemList = ({ addToCart }) => {
     const [items, setItems] = useState([]);
     const [lastKey, setLastKey] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -53,6 +53,12 @@ const ItemList = () => {
                                 <h4 className="text-lg font-semibold mt-2">{item.title}</h4>
                                 <p className="text-sm">Price: ${item.price}</p>
                                 <p className="text-sm">Stars: {item.stars}</p>
+                                <button
+                                    className="mt-2 bg-blue-500 text-white p-2 rounded"
+                                    onClick={() => addToCart(item)}
+                                >
+                                    Add to Cart
+                                </button>
                             </div>
                         );
                     } else {
@@ -65,6 +71,12 @@ const ItemList = () => {
                                 <h4 className="text-lg font-semibold mt-2">{item.title}</h4>
                                 <p className="text-sm">Price: ${item.price}</p>
                                 <p className="text-sm">Stars: {item.stars}</p>
+                                <button
+                                    className="mt-2 bg-blue-500 text-white p-2 rounded"
+                                    onClick={() => addToCart(item)}
+                                >
+                                    Add to Cart
+                                </button>
                             </div>
                         );
                     }
