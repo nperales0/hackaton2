@@ -20,10 +20,11 @@ const Cart = ({ cart, removeFromCart }) => {
                         {cart.map((item) => (
                             <div key={item.asin} className="flex items-center border p-4 rounded shadow">
                                 <img src={item.imgUrl} alt={item.title} className="w-16 h-16 object-cover" />
-                                <div className="ml-4">
+                                <div className="ml-4 flex-1">
                                     <h4 className="text-lg font-semibold">{item.title}</h4>
                                     <p className="text-sm">Price: ${item.price}</p>
                                     <p className="text-sm">Stars: {item.stars}</p>
+                                    <p className="text-sm">Quantity: {item.quantity}</p>
                                     <button
                                         className="mt-2 bg-red-500 text-white p-1 rounded"
                                         onClick={() => removeFromCart(item.asin)}

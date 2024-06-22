@@ -6,11 +6,33 @@ const ItemsPage = () => {
     const [cart, setCart] = useState([]);
 
     const addToCart = (item) => {
-        setCart((prevCart) => [...prevCart, item]);
+        setCart((prevCart) => {
+            const existingItem = prevCart.find(cartItem => cartItem.asin === item.asin);
+            if (existingItem) {
+                return prevCart.map(cartItem =>
+                    cartItem.asin === item.asin
+                        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                        : cartItem
+                );
+            } else {
+                return [...prevCart, { ...item, quantity: 1 }];
+            }
+        });
     };
 
     const removeFromCart = (itemAsin) => {
-        setCart((prevCart) => prevCart.filter(item => item.asin !== itemAsin));
+        setCart((prevCart) => {
+            const existingItem = prevCart.find(cartItem => cartItem.asin === itemAsin);
+            if (existingItem.quantity > 1) {
+                return prevCart.map(cartItem =>
+                    cartItem.asin === itemAsin
+                        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                        : cartItem
+                );
+            } else {
+                return prevCart.filter(item => item.asin !== itemAsin);
+            }
+        });
     };
 
     return (
