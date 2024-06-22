@@ -35,10 +35,14 @@ const ItemsPage = () => {
         });
     };
 
+    const clearCart = () => {
+        setCart([]);
+    };
+
     return (
         <div className="items-page">
             <h1 className="text-3xl font-bold underline text-center mt-4">Items</h1>
-            <Cart cart={cart} removeFromCart={removeFromCart} />
+            <Cart cart={cart} removeFromCart={removeFromCart} clearCart={clearCart} />
             <ItemList addToCart={addToCart} />
         </div>
     );
