@@ -105,6 +105,10 @@ const localItems = {
 
 export const fetchItems = async (limit = 12, lastKey = null) => {
     try {
+        //const response = await axios.get(API_URL, {
+            //params: { limit, lastKey },
+        //});
+        //return response.data;
         // Aquí simulamos una llamada a la API
         const data = localItems; // Usamos los items locales en lugar de hacer una petición HTTP
         return data;
